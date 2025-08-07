@@ -27,7 +27,8 @@
     /* Table styling */
     table {
       border-collapse: collapse;
-      width: 320px;
+      width: 100%;       /* Make table take full container width */
+      max-width: 320px;  /* But not wider than 320px on big screens */
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       background: #fff;
       margin-bottom: 40px;
@@ -61,24 +62,24 @@
       background-color: #fdfdfd;
     }
 
-  #table2 tbody tr:hover .formula {
-  display: inline !important;
-  color: #e67e22;
-  font-style: italic;
-  font-weight: bold;
-}
-#table2 tbody tr:hover .value {
-  display: none !important;
-}
+    /* Hover effect for formula/value toggle in Table 2 */
+    #table2 tbody tr:hover .formula {
+      display: inline !important;
+      color: #e67e22;
+      font-style: italic;
+      font-weight: bold;
+    }
+    #table2 tbody tr:hover .value {
+      display: none !important;
+    }
 
-
-    /* Responsive */
+    /* Responsive adjustments for small screens */
     @media (max-width: 400px) {
-      table {
-        width: 100%;
-      }
       body {
-        margin: 20px;
+        margin: 10px;  /* smaller margin for small phones */
+      }
+      table {
+        max-width: 100%; /* allow table to fill screen width */
       }
     }
   </style>

@@ -83,6 +83,16 @@ th {
       }
     }
 
+    /* On mobile, toggle formula on click by adding this class */
+    @media (hover: none) and (pointer: coarse) {
+        #table2 tbody tr.show-formula .formula {
+        display: inline !important;
+        }
+        #table2 tbody tr.show-formula .value {
+        display: none !important;
+        }
+    }
+
     /* Responsive */
     @media (max-width: 400px) {
       table {

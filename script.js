@@ -1,74 +1,121 @@
-// Fetch CSV file from same directory
-    fetch('Table_Input.csv')
-      .then(response => response.text())
-      .then(csvText => {
-        const rows = csvText.trim().split('\n').map(row => row.split(','));
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Internship Assessment - Mulah Technologies</title>
+  <style>
+    /* General page styling */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9;
+      margin: 40px;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-        // Display Table 1
-        let table1HTML = '<table><thead><tr><th>Index #</th><th>Value</th></tr></thead><tbody>';
-        rows.forEach((row, index) => {
-          if(index === 0 && row[0].toLowerCase().includes('index')) return; // skip header
-          table1HTML += `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`;
-        });
-        table1HTML += '</tbody></table>';
-        document.getElementById('table1').innerHTML = table1HTML;
+    h1, h2 {
+      color: black;
+      margin-bottom: 15px;
+      text-align: center;
+    }
 
-        // Helper to get numeric value by index
-        const getValue = code => {
-          for(const row of rows) {
-            if(row[0] === code) return parseFloat(row[1]);
-          }
-          return 0;
-        };
+    /* Table styling */
+    table {
+  border-collapse: collapse;
+  width: 320px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: #fff;
+  margin-bottom: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ddd; /* light border around whole table */
+}
 
-        // Calculate values using formulas
-        const alpha = getValue('A5') + getValue('A20');
-        const beta = getValue('A15') / getValue('A7');
-        const charlie = getValue('A13') * getValue('A12');
+th, td {
+  border: 1px solid #ddd; /* light borders between cells */
+  padding: 12px 20px;
+  text-align: center;
+  font-size: 16px;
+  background-color: transparent;
+  user-select: none;
+  box-sizing: border-box;
+}
 
-        // Display Table 2 with formula hover/click effect
-        let table2HTML = '<table><thead><tr><th>Category</th><th>Value</th></tr></thead><tbody>';
+th {
+  background-color: #e67e22; /* orange header */
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid #ddd; /* keep header border same light color */
+}
 
-        table2HTML += `<tr>
-          <td>Alpha</td>
-          <td>
-            <span class="formula" style="display:none;">A5 + A20</span>
-            <span class="value">${alpha}</span>
-          </td>
-        </tr>`;
 
-        table2HTML += `<tr>
-          <td>Beta</td>
-          <td>
-            <span class="formula" style="display:none;">A15 / A7</span>
-            <span class="value">${beta}</span>
-          </td>
-        </tr>`;
+    /* Hover highlight for body rows only (desktop) */
+    tbody tr:hover {
+      background-color: #fef5e7; /* lighter orange */
+      cursor: pointer;
+    }
 
-        table2HTML += `<tr>
-          <td>Charlie</td>
-          <td>
-            <span class="formula" style="display:none;">A13 * A12</span>
-            <span class="value">${charlie}</span>
-          </td>
-        </tr>`;
+    tr:nth-child(even) {
+      background-color: #fdfdfd;
+    }
 
-        table2HTML += '</tbody></table>';
-        document.getElementById('table2').innerHTML = table2HTML;
+    /* Formula style - hidden by default */
+    .formula {
+      display: none;
+      color: #e67e22;
+      font-style: italic;
+      font-weight: bold;
+    }
 
-        // Add click event for mobile toggle of formula
-document.getElementById('table2').addEventListener('click', (event) => {
-  let tr = event.target;
-  while (tr && tr.tagName !== 'TR') {
-    tr = tr.parentElement;
-  }
-  if (!tr) return;
-  tr.classList.toggle('show-formula');
-});
+    /* Desktop: show formula on hover */
+    @media (hover: hover) and (pointer: fine) {
+      #table2 tbody tr:hover .formula {
+        display: inline !important;
+      }
+      #table2 tbody tr:hover .value {
+        display: none !important;
+      }
+    }
 
-      })
-      .catch(err => {
-        document.getElementById('table1').innerHTML = '<p style="color:red;">Failed to load CSV file.</p>';
-        document.getElementById('table2').innerHTML = '';
-        console.error('Error loading CSV:', err);
-      });
+    /* On mobile, toggle formula on click by adding this class */
+    @media (hover: none) and (pointer: coarse) {
+        #table2 tbody tr.show-formula .formula {
+        display: inline !important;
+        }
+        #table2 tbody tr.show-formula .value {
+        display: none !important;
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 400px) {
+      table {
+        width: 100%;
+      }
+      body {
+        margin: 20px;
+      }
+    }
+    
+    #table2 td {
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+  <h2>Table 1</h2>
+  <div id="table1"></div>
+
+  <h2>Table 2</h2>
+  <div id="table2"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

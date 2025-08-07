@@ -58,12 +58,13 @@
 
         // Add click event for mobile toggle of formula
 document.getElementById('table2').addEventListener('click', (event) => {
-  let tr = event.target;
-  while (tr && tr.tagName !== 'TR') {
-    tr = tr.parentElement;
-  }
-  if (!tr) return;
-  tr.classList.toggle('show-formula');
+  let td = event.target;
+while (td && td.tagName !== 'TD') {
+  td = td.parentElement;
+}
+if (!td) return;
+td.classList.toggle('show-formula');
+
 });
 
       })

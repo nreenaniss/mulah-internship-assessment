@@ -57,11 +57,15 @@
         document.getElementById('table2').innerHTML = table2HTML;
 
         // Add click event for mobile toggle of formula
-        document.getElementById('table2').addEventListener('click', (event) => {
-          const tr = event.target.closest('tr');
-          if (!tr) return;
-          tr.classList.toggle('show-formula');
-        });
+document.getElementById('table2').addEventListener('click', (event) => {
+  let tr = event.target;
+  while (tr && tr.tagName !== 'TR') {
+    tr = tr.parentElement;
+  }
+  if (!tr) return;
+  tr.classList.toggle('show-formula');
+});
+
       })
       .catch(err => {
         document.getElementById('table1').innerHTML = '<p style="color:red;">Failed to load CSV file.</p>';
